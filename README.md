@@ -1,5 +1,5 @@
 # 2021_ESP32_DOIT_VSC_JTAG
-Test esp-prog JTAG board on ESP32 DO-IT dev. board
+Test esp-prog JTAG board on ESP32 DO-IT dev. board (Visual Studio Code & Platformio are needed)
 
 1. The file in /include/include.rar contains some different versions of C-header files.
   Why I isolated these C-header files ?
