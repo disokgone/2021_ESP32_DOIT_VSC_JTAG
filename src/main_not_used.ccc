@@ -1,0 +1,50 @@
+#include <Arduino.h>
+#include "Adafruit_GFX.h"    // Core graphics library
+#include "Adafruit_ST7735.h" // Hardware-specific library
+#include "Adafruit_SPITFT.h" // SPI for TFT library
+#include <SPI.h>
+void testdrawtext(const char *text, uint16_t color);
+
+#define TFT_CS     2        // TFT CS pin is GPIO2 connected to arduino pin 9
+#define TFT_DC     5        // TFT DC pin is GPIO5 connected to arduino pin 10
+ 
+Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS,  TFT_DC, 4);
+
+void setup() {
+  // Chip is ESP32-D0WD (rev 1) 4MB Flash, 40Mzh Xtal,
+  // 出現 Connecting .....____...__  時按下 EN , 再按下 BOOT, 就會開始燒錄
+  pinMode(LED_BUILTIN, OUTPUT);
+  //Serial.setDebugOutput(true);
+  Serial.begin(115200);
+  //Serial.println("-- START Main() --");
+  tft.initR(INITR_BLACKTAB);   // initialize a ST7735S chip, black tab
+  tft.fillScreen(ST7735_BLACK);
+  delay(1000);
+  testdrawtext("Blue !", ST7735_YELLOW);
+  tft.fillScreen(ST7735_BLUE);
+  delay(1000);
+  testdrawtext("Hi !", ST7735_WHITE);
+  tft.fillScreen(ST7735_BLACK);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  //int  i;
+  // put your main code here, to run repeatedly:
+  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+  delay(1500);                       // wait for a second
+  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
+  delay(1500);                       // wait for a second
+  testdrawtext("Hi here !", ST7735_RED);
+  tft.fillScreen(ST7735_BLACK);
+  //i = i + 1;
+  //if (i > 100) i = 49;
+  // Serial.print(i, HEX);
+}
+
+void testdrawtext(const char *text, uint16_t color) {
+  tft.setCursor(0, 0);
+  tft.setTextColor(color);
+  tft.setTextWrap(true);
+  tft.print(text);
+}
